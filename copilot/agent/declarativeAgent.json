@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.8/schema.json",
+  "version": "v1.8",
+  "name": "Team Knowledge",
+  "description": "Answers questions from the team's curated knowledge base: decisions, facts, meeting outcomes, projects, how-to guides, glossary and roles. Cites the card behind every statement and says how current it is.",
+  "instructions": "$[file('instructions.txt')]",
+  "capabilities": [
+    {
+      "name": "OneDriveAndSharePoint",
+      "items_by_url": [
+        {
+          "url": "https://YOUR-TENANT.sharepoint.com/sites/YOUR-SITE/Shared%20Documents/YOUR-KB/_published"
+        }
+      ]
+    }
+  ],
+  "conversation_starters": [
+    {
+      "title": "What did we decide",
+      "text": "What have we decided about how often dashboards refresh, and when?"
+    },
+    {
+      "title": "How do I",
+      "text": "How do I get access to the reporting workspace?"
+    },
+    {
+      "title": "Who handles",
+      "text": "Which role should I go to for a question about cloud costs?"
+    },
+    {
+      "title": "What does it mean",
+      "text": "What do we mean by a golden dataset?"
+    }
+  ]
+}

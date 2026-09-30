@@ -1,0 +1,21 @@
+{
+  "name": "Harbour Data Team",
+  "cards": 12,
+  "by_status": {
+    "active": 10,
+    "draft": 1,
+    "superseded": 1
+  },
+  "by_type": {
+    "decision": 4,
+    "fact": 3,
+    "howto": 1,
+    "meeting": 1,
+    "project": 1,
+    "role": 1,
+    "term": 1
+  },
+  "content_hash": "e6eec534e954",
+  "latest_update": "2026-09-02",
+  "generated_by": "teamkb index"
+}

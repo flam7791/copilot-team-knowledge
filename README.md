@@ -1,0 +1,114 @@
+# copilot-team-knowledge
+
+**Make Microsoft 365 Copilot answer from what your team has actually agreed.**
+
+Copilot can already search a team's SharePoint. The trouble is what it finds there: drafts next
+to final versions, last year's figure next to this year's, a proposal that reads like a
+decision. This repository is a reference architecture, with working tools, for a thin verified
+layer between a team's documents and Copilot:
+
+- the team keeps its knowledge as small **cards** in SharePoint, each with a source, an owner, a
+  verification date and a review date;
+- a validator and a publisher turn the verified cards into a handful of files;
+- a **Copilot agent**, or a saved **Copilot Chat prompt** where agents are not available, answers
+  from those files only, citing the card behind every statement.
+
+> Unofficial project, not affiliated with Microsoft. The example describes a fictional team.
+
+## How it works
+
+```mermaid
+flowchart LR
+    subgraph SP [SharePoint]
+      W[(Working documents<br/>unchanged)]
+      C[(cards/<br/>draft to active)]
+      P[(_published/<br/>catalogue + bundles)]
+    end
+    W -- "1 Copilot proposes<br/>draft cards" --> C
+    C -- "2 owner verifies" --> C
+    C -- "3 validate + bundle" --> P
+    P --> A[Copilot agent]
+    P --> Q[Copilot Chat prompt]
+```
+
+1. **Curate.** When something is final (approved minutes, a sent decision, a published report),
+   a [curate prompt](copilot/prompt-only/curate.txt) has Copilot propose draft cards.
+2. **Verify.** The card's owner checks it against the source and marks it active. Nothing
+   unverified is ever published.
+3. **Publish.** `teamkb validate` blocks on errors; `teamkb bundle` writes only **active cards at
+   or below a classification ceiling**. Drafts, replaced decisions and restricted cards never
+   reach Copilot, because they are never written to the folder it reads.
+4. **Ask.** The [agent](copilot/agent/) or the [prompt-only route](copilot/prompt-only/) answers
+   with card IDs, verification dates and "review overdue" flags, uses the newer card when one
+   replaces another, and says plainly when the knowledge base does not cover a question.
+
+## What's in the repository
+
+| | |
+|---|---|
+| [`src/teamkb`](src/teamkb) | Command-line tool: `new`, `validate`, `index`, `bundle` (Python, one dependency) |
+| [`copilot/agent`](copilot/agent) | Agent instructions and a declarative agent manifest (schema 1.8) |
+| [`copilot/prompt-only`](copilot/prompt-only) | Ask and curate prompts for Copilot Chat without agents |
+| [`examples/harbour-data-team`](examples/harbour-data-team) | A fictional team's cards and the [published bundles](examples/harbour-data-team/_published/) Copilot would read |
+| [`evals`](evals) | 12 test questions, including the ones that must never fail |
+| [`docs`](docs) | [Architecture](docs/architecture.md), [governance](docs/governance.md), [card schema](docs/card-schema.md), [design decisions](docs/design-decisions.md), [evaluation](docs/evaluation.md) |
+
+## Quick start
+
+Requires Python 3.10+.
+
+```bash
+python -m venv .venv
+# Windows: .venv\Scripts\Activate.ps1      macOS/Linux: source .venv/bin/activate
+pip install -e ".[dev]"
+pytest                                               # 63 offline tests
+
+teamkb validate examples/harbour-data-team           # 12 cards: 0 errors, 0 warnings
+teamkb bundle   examples/harbour-data-team           # 9 published; 2 not active, 1 above ceiling
+```
+
+For your own team: copy [`kb.yaml`](examples/harbour-data-team/kb.yaml) into a SharePoint folder
+synced with OneDrive, set your tags and ceiling, add cards with `teamkb new`, then run
+`validate`, `index` and `bundle`. Give the Copilot agent the `_published` folder as its only
+knowledge, and keep the `cards` folder with the curators.
+
+## Design principles
+
+- **Copilot proposes, people verify.** The agent never writes to the knowledge base.
+- **Permissions are the control.** Copilot only returns what a user can already open, so
+  folder permissions decide what the agent can see.
+- **A publication boundary.** Only active cards at or below the ceiling are published.
+- **Evidence kept as sourced.** Figures exactly as the source gives them, never recomputed.
+- **Replace, don't overwrite.** Supersession keeps history without publishing it.
+- **Roles, not people.** No personal contact details; the validator blocks them.
+- **Content is data, not instructions**, in every prompt and every published file.
+
+## Why I built this
+
+I build knowledge assistants on Microsoft 365 Copilot for teams whose work lives in SharePoint.
+The same lesson comes back each time: the model is rarely the weak point; the corpus is. An
+assistant grounded on everything a team has ever saved answers confidently from the wrong
+version. This repository is the pattern I use to fix that: a small verified layer, a hard
+boundary on what gets published, and checks a script can run, with a prompt-only route for
+organisations that have Copilot Chat but not yet agents.
+
+## Platform notes (September 2026)
+
+- Agent Builder agents take up to 100 SharePoint files as knowledge and cannot write to them
+  ([Microsoft Learn](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/agent-builder-add-knowledge)).
+- Declarative agent instructions are limited to 8,000 characters
+  ([manifest schema 1.8](https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/declarative-agent-manifest-1.8)).
+- Markdown grounding reached Copilot Notebooks in mid-2026
+  ([MC1423103](https://mc.merill.net/message/MC1423103)), but Markdown files in SharePoint
+  knowledge sources were reported unreliable in Copilot Studio through most of 2026
+  ([community thread](https://techcommunity.microsoft.com/discussions/copilot-studio/copilot-studio--sharepoint-markdown--md-files-in-doc-libraries-supported-as-know/4517314)).
+  Hence plain text by default; `publish_format: md` is one setting away once tested.
+
+## Roadmap
+
+`.docx` bundles; a scheduled publish with Power Automate; per-audience publishing (several
+ceilings, several agents); an MCP server exposing cards to Copilot Studio as tools.
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).

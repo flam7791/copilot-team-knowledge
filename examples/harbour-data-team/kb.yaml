@@ -1,0 +1,29 @@
+# Settings for one knowledge base. Everything except name and tags has a default.
+name: Harbour Data Team
+
+# Controlled vocabulary: a card may only use these tags. Add a tag when it improves retrieval,
+# not for every new word.
+tags:
+  - access
+  - architecture
+  - cost
+  - dashboards
+  - data-platform
+  - data-quality
+  - governance
+  - onboarding
+  - reporting
+  - retention
+  - vendors
+
+# Order matters: lowest to highest sensitivity. Unknown labels are treated as the highest.
+classifications: [public, internal, restricted]
+
+# Highest classification that is published to Copilot. Cards above it stay in the source folder
+# only, with the permissions of that folder.
+publish_ceiling: internal
+
+publish_format: txt       # txt (default, read most consistently by Copilot surfaces) or md
+publish_dir: _published   # the only folder the Copilot agent is given as knowledge
+review_months: 12         # default review_by for new cards
+bundle_max_chars: 100000  # warn above this size; test larger bundles in your tenant
