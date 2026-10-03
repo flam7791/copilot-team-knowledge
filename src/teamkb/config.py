@@ -28,6 +28,9 @@ class KBConfig:
     bundle_max_chars: int = 100_000
     summary_max_words: int = 120
     allow_contact_details: bool = False
+    # Optional: where `teamkb publish-sharepoint` uploads the bundles (see docs/sharepoint.md).
+    # Keys: tenant_id, client_id, site ("<host>:/sites/<name>"), library, folder.
+    sharepoint: dict = field(default_factory=dict)
 
     @property
     def cards_path(self) -> Path:

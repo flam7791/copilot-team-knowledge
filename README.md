@@ -63,7 +63,7 @@ Requires Python 3.10+.
 python -m venv .venv
 # Windows: .venv\Scripts\Activate.ps1      macOS/Linux: source .venv/bin/activate
 pip install -e ".[dev]"
-pytest                                               # 73 offline tests
+pytest                                               # 78 offline tests
 
 teamkb validate examples/harbour-data-team           # 12 cards: 0 errors, 0 warnings
 teamkb bundle   examples/harbour-data-team           # 9 published; 2 not active, 1 above ceiling
@@ -73,6 +73,13 @@ For your own team: copy [`kb.yaml`](examples/harbour-data-team/kb.yaml) into a S
 synced with OneDrive, set your tags and ceiling, add cards with `teamkb new`, then run
 `validate`, `index` and `bundle`. Give the Copilot agent the `_published` folder as its only
 knowledge, and keep the `cards` folder with the curators.
+
+### Publishing to SharePoint from a pipeline
+
+`teamkb publish-sharepoint` uploads the bundles to the folder the agent reads through Microsoft
+Graph, with app-only access to that one site (`Sites.Selected`), so validate, bundle and publish
+can run as a pipeline instead of from a OneDrive-synced laptop. Only the publish folder is ever
+uploaded. Setup, permissions and a pipeline example: [docs/sharepoint.md](docs/sharepoint.md).
 
 ### Without Copilot: a local open-weight model
 

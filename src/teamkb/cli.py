@@ -1,4 +1,4 @@
-"""Command line: ``teamkb new | validate | index | bundle | ask | eval``."""
+"""Command line: ``teamkb new | validate | index | bundle | publish-sharepoint | ask | eval``."""
 
 from __future__ import annotations
 
@@ -220,6 +220,21 @@ def cmd_eval(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_publish_sharepoint(args: argparse.Namespace) -> int:
+    from .sharepoint import PublishError, SharePointPublisher
+
+    config = load_config(Path(args.kb))
+    try:
+        report = SharePointPublisher(config).publish(prune=args.prune)
+    except PublishError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        return 2
+    print(f"uploaded {len(report.uploaded)} file(s) to {config.sharepoint['folder']}")
+    for name in report.removed:
+        print(f"  removed {name} (no longer produced)")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="teamkb", description="Curated team knowledge for Microsoft 365 Copilot."
@@ -252,6 +267,18 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--out", help="output folder (default: publish_dir in kb.yaml)")
     p.add_argument("--prune", action="store_true", help="delete bundles no longer produced")
     p.set_defaults(func=cmd_bundle)
+
+    p = with_kb(
+        sub.add_parser(
+            "publish-sharepoint", help="upload the bundles to SharePoint through Microsoft Graph"
+        )
+    )
+    p.add_argument(
+        "--prune",
+        action="store_true",
+        help="also delete this knowledge base's bundles that are no longer produced",
+    )
+    p.set_defaults(func=cmd_publish_sharepoint)
 
     def with_model(p: argparse.ArgumentParser) -> argparse.ArgumentParser:
         p.add_argument(

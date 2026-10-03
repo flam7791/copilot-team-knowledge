@@ -27,3 +27,13 @@ publish_format: txt       # txt (default, read most consistently by Copilot surf
 publish_dir: _published   # the only folder the Copilot agent is given as knowledge
 review_months: 12         # default review_by for new cards
 bundle_max_chars: 100000  # warn above this size; test larger bundles in your tenant
+
+# Optional: publish the bundles straight to the SharePoint folder the Copilot agent reads,
+# with `teamkb publish-sharepoint` (Microsoft Graph, app-only, Sites.Selected). See
+# docs/sharepoint.md. The client secret comes from TEAMKB_GRAPH_CLIENT_SECRET, never this file.
+# sharepoint:
+#   tenant_id: 00000000-0000-0000-0000-000000000000
+#   client_id: 11111111-1111-1111-1111-111111111111
+#   site: contoso.sharepoint.com:/sites/harbour-data
+#   library: Documents
+#   folder: Team knowledge/_published
