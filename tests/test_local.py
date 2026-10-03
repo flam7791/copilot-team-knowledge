@@ -114,3 +114,9 @@ def test_cli_ask_and_eval_with_standin(tmp_path, capsys):
     out = tmp_path / "r.json"
     assert main(["eval", str(KB), str(QUESTIONS), "--standin", "--out", str(out)]) == 0
     assert json.loads(out.read_text())["blocking_failures"] == 0
+
+
+def test_paraphrased_decline_counts_as_not_covered(index):
+    reply = "The team knowledge base does not cover the renewal terms of the warehouse contract."
+    a = local.answer("raw event logs", index, Scripted(reply))
+    assert a.status == "not_covered" and a.text == local.NOT_COVERED

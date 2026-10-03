@@ -1,0 +1,4 @@
+{
+  "model": "llama3.1:8b-ctx8k",
+  "reply": "Answer: Contact the data platform lead. \n\nThe data platform lead is responsible for the dashboard refresh process, as stated in DEC-0003 [DEC-0003]. If the refresh fails, the lead is alerted after a second failure [DEC-0003]. \n\nSources:\n[DEC-0003] Refresh reporting dashboards every four hours, Verified 2026-03-14 by Data platform lead\n[DEC-0003] Refresh reporting dashboards every four hours, Verified 2026-03-14 by Data platform lead\n\nCurrent: review overdue (2027-03-14) - please confirm with the Data platform lead.\n\nNote: The team knowledge base does not cover the process for requesting access to the reporting workspace, so I did not use the HOW-0001 card."
+}

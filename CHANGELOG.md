@@ -2,6 +2,12 @@
 
 Versions follow [semantic versioning](https://semver.org).
 
+## 0.2.1
+
+- First live run of the local route with Llama 3.1 8B: 11/12, no blocking failure; recorded and
+  replayed in CI.
+- Paraphrased declines ("the knowledge base does not cover ...") count as not covered.
+
 ## 0.2.0
 
 - `teamkb ask`: answer from the published bundles with a local open-weight model (Ollama or any

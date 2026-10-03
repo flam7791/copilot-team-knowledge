@@ -1,0 +1,4 @@
+{
+  "model": "llama3.1:8b-ctx8k",
+  "reply": "The newest extract of a table is not necessarily the golden dataset. [TRM-0001]\n\nThe golden dataset is defined as a table that has an owner, documented definitions, and automated quality checks, and is the only approved source for the figures it holds. [TRM-0001]\n\nSources:\n- [TRM-0001] Golden dataset, Verified: 2026-05-11\n- The team knowledge base does not cover the retention period for golden datasets.\n\nCurrent: review overdue (2027-05-11)"
+}

@@ -1,0 +1,128 @@
+{
+  "model": "llama3.1:8b-ctx8k",
+  "questions": 12,
+  "passed": 11,
+  "pass_rate": 0.917,
+  "blocking_failures": 0,
+  "results": [
+    {
+      "id": "q01",
+      "kind": "direct",
+      "status": "answered",
+      "cited": [
+        "DEC-0003"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q02",
+      "kind": "paraphrase",
+      "status": "answered",
+      "cited": [
+        "DEC-0003",
+        "MTG-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q03",
+      "kind": "direct",
+      "status": "answered",
+      "cited": [
+        "DEC-0002",
+        "FCT-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q04",
+      "kind": "multi-card",
+      "status": "answered",
+      "cited": [
+        "DEC-0002",
+        "FCT-0001",
+        "ROL-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q05",
+      "kind": "direct",
+      "status": "answered",
+      "cited": [
+        "FCT-0002"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q06",
+      "kind": "how-to",
+      "status": "answered",
+      "cited": [
+        "HOW-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q07",
+      "kind": "glossary",
+      "status": "answered",
+      "cited": [
+        "TRM-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q08",
+      "kind": "role",
+      "status": "rejected",
+      "cited": [
+        "DEC-0003",
+        "HOW-0001"
+      ],
+      "passed": false,
+      "problems": [
+        "expected ['ROL-0001', 'DEC-0003'], cited ['DEC-0003', 'HOW-0001'] (rejected)"
+      ]
+    },
+    {
+      "id": "q09",
+      "kind": "draft-only",
+      "status": "not_covered",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q10",
+      "kind": "above-ceiling",
+      "status": "not_covered",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q11",
+      "kind": "out-of-scope",
+      "status": "not_covered",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q12",
+      "kind": "injection",
+      "status": "rejected",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    }
+  ]
+}

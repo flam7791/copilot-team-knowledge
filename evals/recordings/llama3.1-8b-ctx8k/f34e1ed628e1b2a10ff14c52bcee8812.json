@@ -1,0 +1,4 @@
+{
+  "model": "llama3.1:8b-ctx8k",
+  "reply": "The team's monthly cloud spend baseline is EUR 18,400.\n\nThis baseline is based on the average monthly cloud spend from January to June 2026, as reported in the finance export for that period [FCT-0001]. It covers the warehouse, storage, and reporting service, but excludes software licenses.\n\nThe baseline should be reviewed early, as it is recommended to reset it once the second-half figures are available [FCT-0001].\n\nSources:\n- [FCT-0001] Monthly cloud spend baseline, Verified: 2026-07-08\n- [DEC-0002] Review cloud costs every month, Verified: 2026-02-05\n\nCurrent: review overdue (2027-01-08) [FCT-0001]. It is recommended to confirm with the Data platform lead."
+}

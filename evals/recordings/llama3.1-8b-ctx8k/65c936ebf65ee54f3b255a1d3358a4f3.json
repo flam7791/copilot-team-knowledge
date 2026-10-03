@@ -1,0 +1,4 @@
+{
+  "model": "llama3.1:8b-ctx8k",
+  "reply": "The dashboard refreshes every four hours, but the sales data from yesterday afternoon is not available until the evening because the data is only updated at the next scheduled refresh time.\n\n[DEC-0003] [MTG-0001]\n\nSources:\n- DEC-0003: Refresh reporting dashboards every four hours, Verified: 2026-03-14 by Data platform lead\n- MTG-0001: Meeting outcome, Architecture review 2026-03-12, Verified: 2026-03-14 by Data platform lead\n\nCurrent as of 2026-03-14. Review overdue. Suggest confirming with the Data platform lead.\n\nNote: The team knowledge base does not cover the specific reason why the sales data is not available until the evening, but it does explain the four-hourly refresh schedule."
+}

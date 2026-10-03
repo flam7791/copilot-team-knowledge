@@ -33,6 +33,9 @@ NOT_COVERED = "The team knowledge base does not cover this."
 INSTRUCTIONS = Path(__file__).resolve().parents[2] / "copilot" / "agent" / "instructions.txt"
 
 CARD_HEADER = re.compile(r"^=== ([A-Z]{3}-\d{4}) \| ([^|]+) \| (.+?) ===\s*$", re.M)
+# The instructions ask for the exact sentence; models paraphrase it ("...does not cover the
+# renewal terms"), as Llama 3.1 8B did in the first live run. Uncited, it is a decline.
+DECLINED = re.compile(r"knowledge base does not (cover|contain|include)", re.I)
 CITED = re.compile(r"\b([A-Z]{3}-\d{4})\b")
 STOPWORDS = {
     "a",
@@ -283,7 +286,7 @@ def answer(question: str, index: CardIndex, model, k: int = 4) -> LocalAnswer:
             given,
             f"cited cards not given: {unknown}",
         )
-    if NOT_COVERED.lower().rstrip(".") in reply.lower() and not cited:
+    if not cited and DECLINED.search(reply):
         return LocalAnswer("not_covered", NOT_COVERED, [], given)
     if not cited:
         return LocalAnswer(

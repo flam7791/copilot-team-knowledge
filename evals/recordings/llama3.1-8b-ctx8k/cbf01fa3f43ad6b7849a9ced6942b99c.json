@@ -1,0 +1,4 @@
+{
+  "model": "llama3.1:8b-ctx8k",
+  "reply": "The reporting dashboards refresh every four hours (00:00, 04:00, 08:00, 12:00, 16:00 and 20:00 UTC). This change was made to accommodate business users' request for same-day figures and to remove the need for a single nightly load, which was no longer necessary due to the move to a usage-based warehouse plan. [DEC-0003]\n\nThe cost impact of this change was estimated to be under 5% of monthly spend, but this is an estimate and not a measured figure. [DEC-0003]\n\nSources:\n- DEC-0003 | Refresh reporting dashboards every four hours\n  - Verified: 2026-03-14 by Data platform lead\n  - Review by: 2027-03-14\n- Architecture review minutes, 12 March 2026 - https://contoso.sharepoint.com/sites/harbour-data/Shared%20Documents/Minutes/2026-03-12%20Architecture%20review.docx\n\nCurrent as of 2026-03-14. Review overdue."
+}

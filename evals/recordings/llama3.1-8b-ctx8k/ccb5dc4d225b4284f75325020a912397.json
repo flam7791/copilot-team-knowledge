@@ -1,0 +1,4 @@
+{
+  "model": "llama3.1:8b-ctx8k",
+  "reply": "Raw event logs are kept for 13 months and then deleted automatically. This allows for a full year-on-year comparison with one month's margin. [FCT-0002]\n\nSources:\n- [FCT-0002] Retention period for raw event logs, Verified: 2026-04-20, https://contoso.sharepoint.com/sites/harbour-data/Shared%20Documents/Policies/Data%20retention%20schedule%20v2.docx\n\nCurrent: review overdue (2027-04-20). It is recommended to confirm with the Data platform lead."
+}
