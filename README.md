@@ -1,5 +1,7 @@
 # copilot-team-knowledge
 
+[![CI](https://github.com/flam7791/copilot-team-knowledge/actions/workflows/ci.yml/badge.svg)](https://github.com/flam7791/copilot-team-knowledge/actions/workflows/ci.yml) [![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE) ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)
+
 **Make Microsoft 365 Copilot answer from what your team has actually agreed.**
 
 Copilot can already search a team's SharePoint. The trouble is what it finds there: drafts next
