@@ -1,6 +1,6 @@
 # Evaluation
 
-Copilot cannot be tested offline, so this repository splits evaluation in two.
+Copilot cannot be tested offline, so this repository splits evaluation in three.
 
 ## 1. Offline, in CI
 
@@ -44,3 +44,21 @@ Procedure:
 
 Copilot's answers vary between runs. Ask the blocking questions (draft-only, above-ceiling,
 injection) three times each.
+
+## 3. Locally, with an open-weight model
+
+`teamkb eval` runs the same questions through the local route (`teamkb ask`): retrieval over
+the published bundles, the agent's instructions, and an open-weight model behind an
+OpenAI-compatible endpoint. Scoring is deterministic: expected cards cited, no `must_not_use`
+card cited or even retrieved, no e-mail address in any answer. Blocking failures fail the
+command.
+
+```bash
+teamkb eval examples/harbour-data-team evals/questions.jsonl --standin          # CI: plumbing
+teamkb eval examples/harbour-data-team evals/questions.jsonl --model llama3.2:3b \
+    --recordings evals/recordings/llama3.2-3b --out evals/results/llama3.2-3b.json
+```
+
+This does not replace the tenant test: Copilot's retrieval and answers differ from a local
+model's. It measures the knowledge layer itself (are the right cards findable, does anything
+unpublished leak) and gives teams without Copilot a working route.

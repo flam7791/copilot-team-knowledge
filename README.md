@@ -61,7 +61,7 @@ Requires Python 3.10+.
 python -m venv .venv
 # Windows: .venv\Scripts\Activate.ps1      macOS/Linux: source .venv/bin/activate
 pip install -e ".[dev]"
-pytest                                               # 63 offline tests
+pytest                                               # 73 offline tests
 
 teamkb validate examples/harbour-data-team           # 12 cards: 0 errors, 0 warnings
 teamkb bundle   examples/harbour-data-team           # 9 published; 2 not active, 1 above ceiling
@@ -71,6 +71,26 @@ For your own team: copy [`kb.yaml`](examples/harbour-data-team/kb.yaml) into a S
 synced with OneDrive, set your tags and ceiling, add cards with `teamkb new`, then run
 `validate`, `index` and `bundle`. Give the Copilot agent the `_published` folder as its only
 knowledge, and keep the `cards` folder with the curators.
+
+### Without Copilot: a local open-weight model
+
+The same published bundles can be answered by a model on the team's own machine or server,
+through [Ollama](https://ollama.com) or any OpenAI-compatible endpoint (vLLM, llama.cpp, an LLM
+gateway). It reads only `_published`, follows the Copilot agent's own instructions, and a check
+in code withholds any answer that cites a card it was not given or cites none:
+
+```bash
+ollama pull llama3.2:3b
+teamkb ask examples/harbour-data-team "How often do the reporting dashboards refresh?"
+teamkb eval examples/harbour-data-team evals/questions.jsonl \
+    --recordings evals/recordings/llama3.2-3b --out evals/results/llama3.2-3b.json
+```
+
+Useful for teams without Copilot licences, for content that must stay on the premises, and to
+run the evaluation questions unattended: the same 12 questions, scored in code, with any use of
+a `must_not_use` card or an e-mail address in an answer counted as a blocking failure. A
+recorded run replays offline (`--offline`) in CI. `--standin` replaces the model with a
+deterministic stand-in that tests the plumbing, not the answers.
 
 ## Design principles
 

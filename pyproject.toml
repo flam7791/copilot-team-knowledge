@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "copilot-team-knowledge"
-version = "0.1.0"
+version = "0.2.0"
 description = "A curated knowledge layer that a team keeps in SharePoint and Microsoft 365 Copilot answers from."
 readme = "README.md"
 license = "MIT"

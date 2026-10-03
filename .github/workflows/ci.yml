@@ -22,3 +22,15 @@ jobs:
       # The same gate a team would run on its own knowledge base.
       - run: teamkb validate examples/harbour-data-team --quiet
       - run: teamkb index examples/harbour-data-team --check
+      # Evaluation questions through the local route: the stand-in must never use an
+      # unpublished card; recorded open-weight model runs are replayed if committed.
+      - run: teamkb eval examples/harbour-data-team evals/questions.jsonl --standin
+      - name: Replay recorded local-model evaluations, if any
+        run: |
+          for dir in evals/recordings/*/; do
+            [ -d "$dir" ] || continue
+            name=$(basename "$dir")
+            teamkb eval examples/harbour-data-team evals/questions.jsonl \
+              --model "${name/-/:}" --recordings "$dir" --offline
+          done
+      - run: pip install pip-audit && pip-audit .

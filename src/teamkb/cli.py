@@ -1,9 +1,11 @@
-"""Command line: ``teamkb new | validate | index | bundle``."""
+"""Command line: ``teamkb new | validate | index | bundle | ask | eval``."""
 
 from __future__ import annotations
 
 import argparse
 import datetime as dt
+import json
+import os
 import sys
 from pathlib import Path
 
@@ -167,6 +169,57 @@ def cmd_bundle(args: argparse.Namespace) -> int:
     return 0
 
 
+def _local_model(args: argparse.Namespace):
+    from . import local
+
+    if getattr(args, "standin", False):
+        return local.StandIn()
+    return local.ChatModel(
+        base_url=args.base_url,
+        model=args.model,
+        api_key=os.environ.get("TEAMKB_API_KEY", ""),
+        recordings=Path(args.recordings) if args.recordings else None,
+        offline=args.offline,
+    )
+
+
+def cmd_ask(args: argparse.Namespace) -> int:
+    from . import local
+
+    index = local.CardIndex(local.load_published(load_config(Path(args.kb))))
+    result = local.answer(args.question, index, _local_model(args))
+    print(result.text)
+    if result.reason:
+        print(f"({result.reason})", file=sys.stderr)
+    return 0 if result.status in {"answered", "not_covered"} else 1
+
+
+def cmd_eval(args: argparse.Namespace) -> int:
+    from . import local
+
+    index = local.CardIndex(local.load_published(load_config(Path(args.kb))))
+    lines = Path(args.questions).read_text(encoding="utf-8").splitlines()
+    questions = [json.loads(line) for line in lines if line.strip()]
+    try:
+        report = local.evaluate(questions, index, _local_model(args))
+    except local.ReplayMiss as exc:
+        print(f"replay miss: {exc}", file=sys.stderr)
+        return 2
+    print(f"model: {report['model']}")
+    print(
+        f"passed: {report['passed']}/{report['questions']}, "
+        f"blocking failures: {report['blocking_failures']}"
+    )
+    for r in report["results"]:
+        if not r["passed"]:
+            print(f"  FAIL {r['id']} ({r['kind']}): {'; '.join(r['problems'])}")
+    if args.out:
+        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+        Path(args.out).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    ok = report["blocking_failures"] == 0 and report["pass_rate"] >= args.min_pass
+    return 0 if ok else 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="teamkb", description="Curated team knowledge for Microsoft 365 Copilot."
@@ -199,6 +252,40 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--out", help="output folder (default: publish_dir in kb.yaml)")
     p.add_argument("--prune", action="store_true", help="delete bundles no longer produced")
     p.set_defaults(func=cmd_bundle)
+
+    def with_model(p: argparse.ArgumentParser) -> argparse.ArgumentParser:
+        p.add_argument(
+            "--base-url",
+            default=os.environ.get("TEAMKB_BASE_URL", "http://localhost:11434/v1"),
+            help="OpenAI-compatible endpoint",
+        )
+        p.add_argument("--model", default=os.environ.get("TEAMKB_MODEL", "llama3.2:3b"))
+        p.add_argument("--recordings", help="record replies here, or replay from here")
+        p.add_argument("--offline", action="store_true", help="replay recordings only")
+        p.add_argument(
+            "--standin",
+            action="store_true",
+            help="deterministic stand-in instead of a model (tests the plumbing)",
+        )
+        return p
+
+    p = with_model(
+        with_kb(
+            sub.add_parser(
+                "ask", help="answer from the published bundles with a local open-weight model"
+            )
+        )
+    )
+    p.add_argument("question")
+    p.set_defaults(func=cmd_ask)
+
+    p = with_model(
+        with_kb(sub.add_parser("eval", help="run the evaluation questions against the local route"))
+    )
+    p.add_argument("questions", help="evals/questions.jsonl")
+    p.add_argument("--min-pass", type=float, default=0.0)
+    p.add_argument("--out", help="write the results as JSON")
+    p.set_defaults(func=cmd_eval)
     return parser
 
 
@@ -208,6 +295,9 @@ def main(argv: list[str] | None = None) -> int:
         return args.func(args)
     except ConfigError as exc:
         print(f"Configuration error: {exc}", file=sys.stderr)
+        return 2
+    except FileNotFoundError as exc:
+        print(f"Error: {exc}", file=sys.stderr)
         return 2
 
 
