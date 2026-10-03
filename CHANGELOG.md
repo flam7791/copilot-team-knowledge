@@ -2,6 +2,13 @@
 
 Versions follow [semantic versioning](https://semver.org).
 
+## 0.3.0
+
+- `teamkb publish-sharepoint`: upload the published bundles to the SharePoint folder the Copilot
+  agent reads, through Microsoft Graph (app-only, Sites.Selected on one site). Only the publish
+  folder is ever uploaded; `--prune` removes this knowledge base's bundles that are no longer
+  produced, and nothing else.
+
 ## 0.2.1
 
 - First live run of the local route with Llama 3.1 8B: 11/12, no blocking failure; recorded and
