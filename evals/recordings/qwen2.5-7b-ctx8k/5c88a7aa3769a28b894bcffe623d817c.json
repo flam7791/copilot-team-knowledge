@@ -1,0 +1,4 @@
+{
+  "model": "qwen2.5:7b-ctx8k",
+  "reply": "To get access to the reporting workspace, you should follow these steps:\n\n1. Open the service desk form \"Reporting workspace access\".\n2. Choose the business unit and list the reports you need.\n3. Your line manager will receive the approval request.\n4. Once approved, the data platform lead will grant read access.\n\nSources:\n- HOW-0001, Request access to the reporting workspace, Verified: 2026-06-15 by Data platform lead, Review by: 2027-06-15, [https://contoso.sharepoint.com/sites/harbour-data/Shared%20Documents/Procedures/Reporting%20workspace%20access.docx]\n- ROL-0001, Data platform lead, Verified: 2026-06-01 by Team lead, Review by: 2027-06-01\n\nThis process ensures that your access request is handled through official channels and reviewed by the appropriate team members."
+}

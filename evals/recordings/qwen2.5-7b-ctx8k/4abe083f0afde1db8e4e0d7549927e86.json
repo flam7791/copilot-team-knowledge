@@ -1,0 +1,4 @@
+{
+  "model": "qwen2.5:7b-ctx8k",
+  "reply": "When a service's cloud cost jumps by more than 20% from the baseline, it is investigated by the service's owner before the next monthly review meeting. The baseline is EUR 18,400, which is the average monthly cloud spend from January to June 2026, as reviewed in the first team meeting of each month.\n\nSources:\n- [FCT-0001] Monthly cloud spend baseline, Verified: 2026-07-08 by Data platform lead, Review by: 2027-01-08\n- [DEC-0002] Review cloud costs every month, Verified: 2026-02-05 by Team lead, Review by: 2027-02-05\n\nThe review is overdue for DEC-0002, and it is recommended to confirm with the Data platform lead."
+}

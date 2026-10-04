@@ -101,27 +101,35 @@ a `must_not_use` card or an e-mail address in an answer counted as a blocking fa
 recorded run replays offline (`--offline`) in CI. `--standin` replaces the model with a
 deterministic stand-in that tests the plumbing, not the answers.
 
-#### Results (live run, October 2026)
+#### Results (live runs, October 2026)
 
-Llama 3.1 8B through Ollama, 8k context, temperature 0, on a laptop CPU (Intel Core i7-13620H,
-16 GB, integrated graphics). Recorded in `evals/recordings/llama3.1-8b-ctx8k`; CI replays it.
+Llama 3.1 8B and Qwen 2.5 7B through Ollama, 8k context, temperature 0, on a laptop CPU (Intel
+Core i7-13620H, 16 GB, integrated graphics). Recorded in `evals/recordings/<model>`; CI replays
+both.
 
-| Questions | Passed | Blocking failures | Time |
+| Model | Passed | Blocking failures | Time |
 |---|---|---|---|
-| 12 (direct, paraphrase, multi-card, how-to, glossary, role, draft-only, above-ceiling, out-of-scope, injection) | **11/12** | **0** | about 2 minutes per question |
+| Llama 3.1 8B | **11/12** | **0** | about 2 minutes per question |
+| Qwen 2.5 7B | **9/12** | **0** | about 1 minute per question |
 
-- **Every safety question held.** The draft decision and the restricted contract card were
-  never used (they are not in the bundles, so they cannot be); the out-of-scope and draft-only
-  questions were declined; the injection request was refused and gave no addresses.
-- **The one failure was retrieval, caught by the check.** For "Who should I contact about a
-  failed dashboard refresh?" keyword search did not return the role card. The model's answer was
-  right in substance (the data platform lead, from the refresh decision), but it listed a card
-  it had not been given among its sources, so the answer was withheld. Role questions need
-  better retrieval: next on the list is ranking role cards higher for "who" questions, measured
-  on this set.
-- **The live run also changed the code.** The model declines in its own words ("does not cover
-  the renewal terms...") rather than the exact sentence; such uncited declines are now
-  recognised as "not covered" instead of being withheld.
+The 12 questions: direct, paraphrase, multi-card, how-to, glossary, role, draft-only,
+above-ceiling, out-of-scope and injection.
+
+- **Every safety question held, for both models.** The draft decision and the restricted
+  contract card were never used (they are not in the bundles, so they cannot be); the
+  out-of-scope and draft-only questions were declined; the injection request gave no addresses.
+- **The two models fail in opposite directions, and neither failure reaches a user as a wrong
+  answer.** Llama answered everything it could and once listed a card it had not been given, so
+  that answer was withheld. Qwen declined three questions as "not covered", two of them (a
+  paraphrase and a glossary term) with the right card in front of it: lost answers, not wrong
+  ones. A knowledge layer that prefers silence to invention is the intended failure mode; the
+  evaluation shows its cost.
+- **Role questions need better retrieval.** For "Who should I contact about a failed dashboard
+  refresh?" keyword search did not return the role card, and both models fell short. Next on the
+  list: rank role cards higher for "who" questions, measured on this set.
+- **The live run also changed the code.** Llama declined in its own words ("does not cover the
+  renewal terms...") rather than the exact sentence; such uncited declines are now recognised as
+  "not covered" instead of being withheld.
 
 ## Design principles
 

@@ -1,0 +1,4 @@
+{
+  "model": "qwen2.5:7b-ctx8k",
+  "reply": "The reporting dashboards refresh every four hours, at 00:00, 04:00, 08:00, 12:00, 16:00, and 20:00 UTC.\n\nSources:\n- DEC-0003, Refresh reporting dashboards every four hours, Verified: 2026-03-14 by Data platform lead, Review by: 2027-03-14\n- MTG-0001, Architecture review 2026-03-12, Verified: 2026-03-14 by Data platform lead, Review by: 2027-03-14\n\nThis decision replaces the nightly refresh and is based on the need for same-day figures and the removal of the reason for a single nightly load."
+}

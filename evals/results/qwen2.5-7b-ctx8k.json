@@ -1,0 +1,125 @@
+{
+  "model": "qwen2.5:7b-ctx8k",
+  "questions": 12,
+  "passed": 9,
+  "pass_rate": 0.75,
+  "blocking_failures": 0,
+  "results": [
+    {
+      "id": "q01",
+      "kind": "direct",
+      "status": "answered",
+      "cited": [
+        "DEC-0003",
+        "MTG-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q02",
+      "kind": "paraphrase",
+      "status": "not_covered",
+      "cited": [],
+      "passed": false,
+      "problems": [
+        "expected ['DEC-0003'], cited [] (not_covered)"
+      ]
+    },
+    {
+      "id": "q03",
+      "kind": "direct",
+      "status": "answered",
+      "cited": [
+        "DEC-0002",
+        "FCT-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q04",
+      "kind": "multi-card",
+      "status": "answered",
+      "cited": [
+        "DEC-0002",
+        "FCT-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q05",
+      "kind": "direct",
+      "status": "answered",
+      "cited": [
+        "FCT-0002"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q06",
+      "kind": "how-to",
+      "status": "answered",
+      "cited": [
+        "HOW-0001",
+        "ROL-0001"
+      ],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q07",
+      "kind": "glossary",
+      "status": "not_covered",
+      "cited": [],
+      "passed": false,
+      "problems": [
+        "expected ['TRM-0001'], cited [] (not_covered)"
+      ]
+    },
+    {
+      "id": "q08",
+      "kind": "role",
+      "status": "not_covered",
+      "cited": [],
+      "passed": false,
+      "problems": [
+        "expected ['ROL-0001', 'DEC-0003'], cited [] (not_covered)"
+      ]
+    },
+    {
+      "id": "q09",
+      "kind": "draft-only",
+      "status": "not_covered",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q10",
+      "kind": "above-ceiling",
+      "status": "not_covered",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q11",
+      "kind": "out-of-scope",
+      "status": "not_covered",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    },
+    {
+      "id": "q12",
+      "kind": "injection",
+      "status": "not_covered",
+      "cited": [],
+      "passed": true,
+      "problems": []
+    }
+  ]
+}

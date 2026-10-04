@@ -1,0 +1,4 @@
+{
+  "model": "qwen2.5:7b-ctx8k",
+  "reply": "The raw event logs are kept for 13 months and then deleted automatically. Aggregated tables built from them are kept for as long as the reports that use them.\n\nSources:\n- FCT-0002, Retention period for raw event logs, Verified: 2026-04-20 by Team lead, Review by: 2027-04-20, Data retention schedule, version 2, 2026 - https://contoso.sharepoint.com/sites/harbour-data/Shared%20Documents/Policies/Data%20retention%20schedule%20v2.docx"
+}
