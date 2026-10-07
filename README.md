@@ -51,6 +51,7 @@ flowchart LR
 | [`src/teamkb`](src/teamkb) | Command-line tool: `new`, `validate`, `index`, `bundle` (Python, one dependency) |
 | [`copilot/agent`](copilot/agent) | Agent instructions and a declarative agent manifest (schema 1.8) |
 | [`copilot/prompt-only`](copilot/prompt-only) | Ask and curate prompts for Copilot Chat without agents |
+| [`skills/team-knowledge-curator`](skills/team-knowledge-curator/SKILL.md) | The curate step for an agent that runs commands (Claude Code and others): drafts only, validated with `teamkb` |
 | [`examples/harbour-data-team`](examples/harbour-data-team) | A fictional team's cards and the [published bundles](examples/harbour-data-team/_published/) Copilot would read |
 | [`evals`](evals) | 12 test questions, including the ones that must never fail |
 | [`docs`](docs) | [Architecture](docs/architecture.md), [governance](docs/governance.md), [card schema](docs/card-schema.md), [design decisions](docs/design-decisions.md), [evaluation](docs/evaluation.md) |

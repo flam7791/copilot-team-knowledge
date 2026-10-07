@@ -2,6 +2,11 @@
 
 Versions follow [semantic versioning](https://semver.org).
 
+## Unreleased
+
+- `AGENTS.md` (commands, layout, invariants) for coding agents; `CLAUDE.md` imports it.
+- `skills/team-knowledge-curator/SKILL.md`: the curate step for an agent that runs commands; it drafts cards with `teamkb new`, validates them, and never activates or publishes.
+
 ## 0.3.0
 
 - `teamkb publish-sharepoint`: upload the published bundles to the SharePoint folder the Copilot
