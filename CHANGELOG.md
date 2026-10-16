@@ -2,10 +2,13 @@
 
 Versions follow [semantic versioning](https://semver.org).
 
-## Unreleased
+## 0.3.1
 
 - `AGENTS.md` (commands, layout, invariants) for coding agents; `CLAUDE.md` imports it.
 - `skills/team-knowledge-curator/SKILL.md`: the curate step for an agent that runs commands; it drafts cards with `teamkb new`, validates them, and never activates or publishes.
+- The README opens with the framework pattern this repository implements and a link to the
+  other repositories.
+- `CITATION.cff`, so GitHub offers "Cite this repository".
 
 ## 0.3.0
 

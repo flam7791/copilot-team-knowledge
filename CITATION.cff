@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use or refer to this software, please cite it as below."
+type: software
+title: copilot-team-knowledge
+abstract: "A curated knowledge layer that a team keeps in SharePoint and Microsoft 365 Copilot answers from."
+authors:
+  - given-names: Flavio
+    family-names: Mericio
+version: 0.3.1
+date-released: "2026-10-16"
+license: MIT
+repository-code: "https://github.com/flam7791/copilot-team-knowledge"
+url: "https://github.com/flam7791/copilot-team-knowledge"
+keywords:
+  - microsoft-365-copilot
+  - knowledge-management
+  - sharepoint
+  - ai-governance

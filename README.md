@@ -17,6 +17,13 @@ layer between a team's documents and Copilot:
 
 > Unofficial project, not affiliated with Microsoft. The example describes a fictional team.
 
+> **Part of a portfolio.** Implements pattern [P6][aief-p6] of the [AI engineering framework][aief],
+> at its *Build* stage. [All repositories][aief-all].
+
+[aief]: https://github.com/flam7791/ai-engineering-framework
+[aief-all]: https://github.com/flam7791
+[aief-p6]: https://github.com/flam7791/ai-engineering-framework/blob/main/docs/patterns.md#p6-curated-knowledge-layer-for-an-enterprise-assistant
+
 ## How it works
 
 ```mermaid
